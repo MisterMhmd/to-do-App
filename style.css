@@ -38,7 +38,7 @@ body {
 .add {
     align-items: center;
     margin-top: 14px;
-    background: #1D9D1D;
+    background: rgb(29, 157, 29);
     border: 1px solid #000000;
     padding-left: 10px;
     padding-right: 10px;
@@ -52,6 +52,10 @@ body {
     color: #FFFFFF;
     cursor: pointer;
     transition: background-color 0.4s, opacity 0.4s;
+}
+
+.add:hover {
+    background-color: rgb(15, 117, 15);
 }
 
 .Adding-Tasks {
@@ -145,6 +149,10 @@ body {
 
 }
 
+.all:hover {
+    background-color: rgb(206,206,206);
+}
+
 .pending {
     cursor: pointer;
     box-sizing: border-box;
@@ -153,9 +161,13 @@ body {
     height: 40px;
     font-size: 20px;
 
-    background: #F4A261;
+    background: rgb(244, 162, 97);
     border: 2px solid #000000;
     border-radius: 30px;
+}
+
+.pending:hover {
+    background: rgb(211, 141, 83);
 }
 
 .completed {
@@ -166,9 +178,13 @@ body {
     height: 40px;
     font-size: 20px;
 
-    background: #2ECC71;
+    background: rgb(46, 204, 113);
     border: 2px solid #000000;
     border-radius: 30px;
+}
+
+.completed:hover {
+    background: rgb(41, 186, 101);
 }
 
 .pending-tasks {
@@ -188,14 +204,17 @@ body {
 }
 
 .checkmark {
-    /* Rectangle 9 */
-margin-left: 20px;
-width: 20px;
-height: 20px;
-vertical-align: middle;
-border: 2px solid #000000;
-border-radius: 5px;
+    margin-left: 20px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+.checkmark:hover {
+    background-color: rgb(206,206,206);
 }
 
 .pending-text {
@@ -239,10 +258,19 @@ border-radius: 5px;
 .edit, .delete {
     display: flex;
     border: none;
-    background-color: #F8F9FA;
+    background: none;
     justify-content: center;
     align-items: center;
     margin-left: 5px;
+    cursor: pointer;
+}
+
+.delete:hover{
+    filter: invert(16%) sepia(61%) saturate(5733%) hue-rotate(355deg) brightness(93%) contrast(84%);
+}
+
+.edit:hover {
+    filter: invert(87%) sepia(66%) saturate(519%) hue-rotate(350deg) brightness(94%) contrast(96%);
 }
 
 .function-buttons {
