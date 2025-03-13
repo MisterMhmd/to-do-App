@@ -62,20 +62,27 @@ body {
     display: flex;
     justify-content: center;
     margin-bottom: 0;
-    margin-top: 80px;  
+    margin-top: 60px;  
     padding-left: 16px;
     width: 100%;
 }
 
 .adding {
-    display: block;
-    width: 1000px;
+    display: flex;
+    width: 500px;
+    flex-shrink: 0;
     border-radius: 5px;
     height: 30px;
     text-indent: 10px;
     border:none;
     box-shadow: 2px 2px 5px rgb(131, 129, 129);
     outline: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 60px;  
+    padding-left: 16px;
+    width: 50%;
 }
 
 .button {
@@ -91,7 +98,7 @@ body {
 }
 
 
-.task {
+.task-list {
     flex-shrink: 0;
     align-items: center;
     width: 600px;
