@@ -28,9 +28,9 @@
                     <p class="task-header"> Tasks </p>
                 </div>
                 <div class="filters">
-                    <button class="all"> All </button>
-                    <button class="pending"> Pending </button>
-                    <button class="completed"> Completed </button>
+                    <button class="all" onclick="All()"> All </button>
+                    <button class="pending" onclick="Only_pending()"> Pending </button>
+                    <button class="completed" onclick="Only_completed()"> Completed </button>
                 </div>
                 <div class="task-input">
                     <!-- <div class="pending-tasks" id="">
@@ -50,7 +50,7 @@
                         <div class="function-buttons">
                             <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
                             </button>
-                            <button class="delete" aria-label="delete"> <img src="images/delete-button.svg" />
+                            <button class="delete" aria-label="delete" onclick="Delete()"> <img src="images/delete-button.svg" />
                             </button>
                         </div>
     
@@ -64,6 +64,12 @@
                         <button class="check-icon" aria-label="checked"> <img src="images/checkmark.svg" />
                         </button>
                         <p class="text"> Build a calculator </p>
+                        <div class="function-buttons">
+                        <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
+                        </button>
+                        <button class="delete" aria-label="delete" onclick="Delete()"> <img src="images/delete-button.svg" />
+                        </button>
+                        </div>
                     </div> -->
                 </div>
             </div>

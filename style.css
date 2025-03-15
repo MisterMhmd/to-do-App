@@ -120,6 +120,8 @@ body {
     display: flex;
     border-radius: 10px 10px 0 0;
     display: block;
+    position: absolute;
+    width: 39.5%;
     flex: 10;
     justify-content: top;
     border-width: 2px;
@@ -143,7 +145,7 @@ body {
 }
 
 .filters{
-    margin-top: 15px;
+    margin-top: 60px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -306,4 +308,13 @@ body {
 
 .pending-task-container {
     display: flex;
+}
+
+
+.active {
+    display: flex;
+}
+
+.inactive {
+    display: none;
 }
