@@ -137,6 +137,7 @@ function Edit(editing) {
         task_name.remove();
     }
 
+
     const taskItem = document.createElement("div");
     taskItem.classList.add("pending-tasks", "active");
     taskItem.innerHTML = `
@@ -178,8 +179,8 @@ function Edit(editing) {
         const element = task_adding.closest('.pending-tasks');
         if (element) {
             element.remove();
-        }
-    
+        }   
+
         document.querySelector('.task-input').prepend(taskItem);
         task_adding.value = "";
 

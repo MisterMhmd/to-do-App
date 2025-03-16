@@ -14,7 +14,6 @@ body {
     flex-shrink: 0;
     background: linear-gradient(90deg, #000000 0%, #828187 92.4%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0px 0px 24px 24px;
 }
 
 .title {
@@ -158,7 +157,7 @@ body {
     height: 40px;
     font-size: 20px;
 
-    background: #FFFFFF;
+    background: none;
     border: 2px solid #000000;
     border-radius: 30px;
 
@@ -213,7 +212,7 @@ body {
     margin-right: 20px;
     height: 75px;
     width: 550px;
-    background: #F8F9FA;
+    background: none;
     border: 3px solid #F4A261;
     border-radius: 20px;
 }
@@ -250,7 +249,7 @@ body {
         margin-right: 20px;
         height: 75px;
         width: 550px;
-        background: #F8F9FA;
+        background: none;
         border: 3px solid #2ECC71;
         border-radius: 20px;
 }
