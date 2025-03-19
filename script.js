@@ -1,6 +1,101 @@
 
 document.addEventListener("DOMContentLoaded", loadTasks);
 
+class TaskButtons {
+
+    TaskButtons() {
+    }
+
+    Edit(editing) {
+        const task_name = editing.closest(".pending-tasks");
+        let text = task_name.querySelector(".pending-text").textContent;
+        if (task_name) {
+            task_name.remove();
+        }
+    
+    
+        const taskItem = document.createElement("div");
+        taskItem.classList.add("pending-tasks", "active");
+        taskItem.innerHTML = `
+            <button class="checkmark"></button>
+            <input class="pending-text" placeholder="${text}" />
+            <div class="function-buttons">
+                <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
+                </button>
+                <button class="delete-pending" aria-label="delete"> <img src="images/delete-button.svg" />
+                </button>
+            </div>
+        `;
+
+
+        document.querySelector('.task-input').prepend(taskItem);
+    
+    
+        const task_adding = document.querySelector(".pending-text")
+        document.querySelector(".pending-tasks").addEventListener("change", (e) => {
+            e.preventDefault();
+            
+            
+    
+            const value = task_adding.value.trim();
+            if (!value) return alert("Task cannot be empty!");
+            
+            const taskItem = document.createElement("div");
+            taskItem.classList.add("pending-tasks", "active");
+            Addpending(taskItem, value);
+    
+            const element = task_adding.closest('.pending-tasks');
+            if (element) {
+                element.remove();
+            }   
+    
+            document.querySelector('.task-input').prepend(taskItem);
+            task_adding.value = "";
+    
+            saveTasks();
+        })
+    }
+
+
+    Completed(checkmark){
+        const element = checkmark.closest('.pending-tasks');
+        const text = element.querySelector(".pending-text").textContent;
+        if (element) {
+            element.remove();
+        }
+        
+        const completed_task = document.createElement("div");
+        completed_task.classList.add("completed-tasks", "active");
+        AddCompleted(completed_task, text);
+    
+        document.querySelector('.task-input').appendChild(completed_task);
+        
+        saveTasks();
+    }
+}
+
+function Addpending(pending, text) {
+    pending.innerHTML = `
+            <button class="checkmark"></button>
+            <p class="pending-text">${text}</p>
+            <div class="function-buttons">
+                <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
+                </button>
+                <button class="delete-pending" aria-label="delete"> <img src="images/delete-button.svg" />
+                </button>
+            </div>
+        `;
+}
+
+function AddCompleted(completed, text) {
+    completed.innerHTML = `
+    <button class="check-icon" aria-label="checked"> <img src="images/checkmark.svg" /></button>
+    <p class="text"> ${text} </p>
+    <div class="function-buttons">
+        <button class="delete-completed" aria-label="delete"> <img src="images/delete-button.svg" /></button>
+    </div>
+    `;
+}
 
 function saveTasks() {
     const pendingTasks = Array.from(document.querySelectorAll(".pending-tasks .pending-text"))
@@ -12,38 +107,38 @@ function saveTasks() {
 }
 
 function loadTasks() {
-    const pendingTasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
-    const completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
-    pendingTasks.forEach(task => {
-        const taskItem = document.createElement("div");
-        taskItem.classList.add("pending-tasks", "active");
-        taskItem.innerHTML = `
-            <button class="checkmark" onclick="Completed(this)"></button>
-            <p class="pending-text">${task}</p>
-            <div class="function-buttons">
-                <button class="edit" aria-label="edit" onclick="Edit(this)"> <img src="images/edit-button.svg" />
-                </button>
-                <button class="delete" aria-label="delete" onClick="Delete_pending(this)"> <img src="images/delete-button.svg" />
-                </button>
-            </div>
-        `;
+    try {
+        const pendingTasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
 
-
+        pendingTasks.forEach(task => {
+            const taskItem = document.createElement("div");
+            taskItem.classList.add("pending-tasks", "active");
+            Addpending(taskItem, task);
     
-        document.querySelector('.task-input').prepend(taskItem);
-    });
-    completedTasks.forEach(task => {
-        const completed_task = document.createElement("div");
-        completed_task.classList.add("completed-tasks", "active");
-        completed_task.innerHTML = `
-            <button class="check-icon" aria-label="checked"> <img src="images/checkmark.svg" /></button>
-            <p class="text"> ${task} </p>
-            <div class="function-buttons">
-                <button class="delete" aria-label="delete" onclick="Delete_completed(this)"> <img src="images/delete-button.svg" /></button>
-            </div>
-        `;
-        document.querySelector('.task-input').appendChild(completed_task);
-    });
+    
+        
+            document.querySelector('.task-input').prepend(taskItem);
+        });
+    }
+    catch(err) {
+        console.error('Error in retreiving tasks! ', err);
+    }
+
+    try {
+        const completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+
+
+        completedTasks.forEach(task => {
+            const completed_task = document.createElement("div");
+            completed_task.classList.add("completed-tasks", "active");
+            AddCompleted(completed_task, task);
+    
+            document.querySelector('.task-input').appendChild(completed_task);
+        });
+    }
+    catch(err) {
+        console.error('Error in retreiving tasks! ', err);
+    }
 }
 
 
@@ -105,88 +200,7 @@ function All() {
     saveTasks();
 };
 
-function Completed(checkmark) {
-    const element = checkmark.closest('.pending-tasks');
-    const text = element.querySelector(".pending-text").textContent;
-    if (element) {
-        element.remove();
-    }
 
-    const completed_task = document.createElement("div");
-    completed_task.classList.add("completed-tasks", "active");
-    completed_task.innerHTML = `
-        <button class="check-icon" aria-label="checked"> <img src="images/checkmark.svg" />
-        </button>
-        <p class="text"> ${text} </p>
-        <div class="function-buttons">
-            <button class="delete" aria-label="delete" onclick="Delete_completed(this)"> <img src="images/delete-button.svg" />
-            </button>
-        </div>
-    `;
-
-    document.querySelector('.task-input').appendChild(completed_task);
-
-    saveTasks();
-}
-
-
-function Edit(editing) {
-    const task_name = editing.closest(".pending-tasks")
-    text = task_name.querySelector(".pending-text").textContent;
-    if (task_name) {
-        task_name.remove();
-    }
-
-
-    const taskItem = document.createElement("div");
-    taskItem.classList.add("pending-tasks", "active");
-    taskItem.innerHTML = `
-        <button class="checkmark" onclick="Completed(this)"></button>
-        <input class="pending-text" placeholder="${text}" />
-        <div class="function-buttons">
-            <button class="edit" aria-label="edit" onclick="Edit(this)"> <img src="images/edit-button.svg" />
-            </button>
-            <button class="delete" aria-label="delete" onClick="Delete_pending(this)"> <img src="images/delete-button.svg" />
-            </button>
-        </div>
-    `;
-
-    document.querySelector('.task-input').prepend(taskItem);
-
-
-    const task_adding = document.querySelector(".pending-text")
-    document.querySelector(".pending-tasks").addEventListener("change", (e) => {
-        e.preventDefault();
-        
-        
-
-        const value = task_adding.value.trim();
-        if (!value) return alert("Task cannot be empty!");
-        
-        const taskItem = document.createElement("div");
-        taskItem.classList.add("pending-tasks", "active");
-        taskItem.innerHTML = `
-            <button class="checkmark" onclick="Completed(this)"></button>
-            <p class="pending-text">${value}</p>
-            <div class="function-buttons">
-                <button class="edit" aria-label="edit" onclick="Edit(this)"> <img src="images/edit-button.svg" />
-                </button>
-                <button class="delete" aria-label="delete" onClick="Delete_pending(this)"> <img src="images/delete-button.svg" />
-                </button>
-            </div>
-        `;
-
-        const element = task_adding.closest('.pending-tasks');
-        if (element) {
-            element.remove();
-        }   
-
-        document.querySelector('.task-input').prepend(taskItem);
-        task_adding.value = "";
-
-        saveTasks();
-    })
-}
 
 
 
@@ -202,16 +216,7 @@ window.addEventListener('load', () =>{
     
         const taskItem = document.createElement("div");
         taskItem.classList.add("pending-tasks", "active");
-        taskItem.innerHTML = `
-            <button class="checkmark" onclick="Completed(this)"></button>
-            <p class="pending-text">${value}</p>
-            <div class="function-buttons">
-                <button class="edit" aria-label="edit" onclick="Edit(this)"> <img src="images/edit-button.svg" />
-                </button>
-                <button class="delete" aria-label="delete" onClick="Delete_pending(this)"> <img src="images/delete-button.svg" />
-                </button>
-            </div>
-        `;
+        Addpending(taskItem, value);
 
 
     
@@ -220,9 +225,31 @@ window.addEventListener('load', () =>{
 
         saveTasks();
     });
-
 })
 
 
+const adding_tasks = new TaskButtons();
+
+
+document.querySelector(".task-input").addEventListener('click', function(event) {
+
+    let target = event.target.closest('.checkmark, .edit, .delete-pending, .delete-completed');
+
+
+    if (target.classList.contains('checkmark')) {
+        adding_tasks.Completed(event.target);
+        console.log("Event completed");
+    } else if (target.classList.contains('edit')) {
+        adding_tasks.Edit(event.target);
+        console.log("Event completed");
+    } else if (target.classList.contains('delete-pending')) {
+        Delete_pending(event.target);
+        console.log("Event completed");
+    }
+    else if (target.classList.contains('delete-completed')){
+        Delete_completed(event.target);
+        console.log("Event completed");
+    } 
+});
 
 

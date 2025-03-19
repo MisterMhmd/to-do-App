@@ -269,7 +269,7 @@ body {
     margin-left: 20px;
 }
 
-.edit, .delete {
+.edit, .delete-pending, .delete-completed {
     display: flex;
     border: none;
     background: none;
@@ -279,7 +279,7 @@ body {
     cursor: pointer;
 }
 
-.delete:hover{
+.delete-pending:hover, .delete-completed:hover{
     filter: invert(16%) sepia(61%) saturate(5733%) hue-rotate(355deg) brightness(93%) contrast(84%);
 }
 
