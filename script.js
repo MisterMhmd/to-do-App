@@ -250,6 +250,20 @@ document.querySelector(".task-input").addEventListener('click', function(event) 
         Delete_completed(event.target);
         console.log("Event completed");
     } 
+    
 });
 
+document.querySelector(".filters").addEventListener('click', function(event) {
+
+    let target = event.target.closest('.all, .pending, .completed');
+
+    if (target.classList.contains('all')) {
+        All(event.target);
+    } else if (target.classList.contains('pending')) {
+        Only_pending(event.target);
+    } else if (target.classList.contains('completed')){
+        Only_completed(event.target);
+    }
+
+});
 
