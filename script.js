@@ -7,53 +7,54 @@ class TaskButtons {
     }
 
     Edit(editing) {
-        const task_name = editing.closest(".pending-tasks");
-        let text = task_name.querySelector(".pending-text").textContent;
-        if (task_name) {
-            task_name.remove();
-        }
+        const taskItem = editing.closest(".pending-tasks");
+        const textElement = taskItem.querySelector(".pending-text");
+        const originalText = textElement.textContent.trim();
     
+        textElement.style.display = "none";
+
+
+        const inputField = document.createElement("input");
+        inputField.classList.add("pending-text");
+        inputField.placeholder = originalText;
     
-        const taskItem = document.createElement("div");
-        taskItem.classList.add("pending-tasks", "active");
-        taskItem.innerHTML = `
-            <button class="checkmark"></button>
-            <input class="pending-text" placeholder="${text}" />
-            <div class="function-buttons">
-                <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
-                </button>
-                <button class="delete-pending" aria-label="delete"> <img src="images/delete-button.svg" />
-                </button>
-            </div>
+        const function_buttons = editing.closest(".function-buttons");
+        function_buttons.innerHTML = `
+        <button class="save" aria-label="save"> <img src="images/Save.svg" /> </button>
+        <button class="cancel" aria-label="cancel"> <img src="images/Cancel.svg" /> </button>
         `;
-
-
-        document.querySelector('.task-input').prepend(taskItem);
+    
+        taskItem.insertBefore(inputField, textElement);
     
     
-        const task_adding = document.querySelector(".pending-text")
-        document.querySelector(".pending-tasks").addEventListener("change", (e) => {
-            e.preventDefault();
-            
-            
+        document.querySelector(".save").addEventListener("click", () => {
+            const updatedText = inputField.value.trim();
+            if (updatedText) {
+                textElement.textContent = updatedText;
+                textElement.style.display = "block"; 
+                cleanup();
+                saveTasks();
+            } else {
+                alert("Task cannot be empty!");
+            }
+        });
     
-            const value = task_adding.value.trim();
-            if (!value) return alert("Task cannot be empty!");
-            
-            const taskItem = document.createElement("div");
-            taskItem.classList.add("pending-tasks", "active");
-            Addpending(taskItem, value);
+        document.querySelector(".cancel").addEventListener("click", () => {
+            textElement.style.display = "block"; 
+            cleanup();
+        });
     
-            const element = task_adding.closest('.pending-tasks');
-            if (element) {
-                element.remove();
-            }   
-    
-            document.querySelector('.task-input').prepend(taskItem);
-            task_adding.value = "";
-    
-            saveTasks();
-        })
+        function cleanup() {
+            inputField.remove();
+            document.querySelector(".save").remove();
+            document.querySelector(".cancel").remove();
+            function_buttons.innerHTML = `
+            <button class="edit" aria-label="edit"> <img src="images/edit-button.svg" />
+            </button>
+            <button class="delete-pending" aria-label="delete"> <img src="images/delete-button.svg" />
+            </button>
+            `
+        }
     }
 
 
@@ -231,10 +232,12 @@ window.addEventListener('load', () =>{
 const adding_tasks = new TaskButtons();
 
 
+
 document.querySelector(".task-input").addEventListener('click', function(event) {
 
     let target = event.target.closest('.checkmark, .edit, .delete-pending, .delete-completed');
 
+    if (!target) return;
 
     if (target.classList.contains('checkmark')) {
         adding_tasks.Completed(event.target);
@@ -249,8 +252,11 @@ document.querySelector(".task-input").addEventListener('click', function(event) 
     else if (target.classList.contains('delete-completed')){
         Delete_completed(event.target);
         console.log("Event completed");
-    } 
-    
+    }  else if (target.classList.contains(".cancel")) {
+        Addpending(task_name, text);
+    } else {
+        console.log("")
+    }
 });
 
 document.querySelector(".filters").addEventListener('click', function(event) {

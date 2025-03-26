@@ -269,7 +269,7 @@ body {
     margin-left: 20px;
 }
 
-.edit, .delete-pending, .delete-completed {
+.edit, .delete-pending, .delete-completed, .cancel, .save{
     display: flex;
     border: none;
     background: none;
@@ -279,11 +279,16 @@ body {
     cursor: pointer;
 }
 
-.delete-pending:hover, .delete-completed:hover{
+.cancel {
+    width: 42;
+    height: 37;
+}
+
+.delete-pending:hover, .delete-completed:hover, .cancel:hover{
     filter: invert(16%) sepia(61%) saturate(5733%) hue-rotate(355deg) brightness(93%) contrast(84%);
 }
 
-.edit:hover {
+.edit:hover, .save:hover{
     filter: invert(87%) sepia(66%) saturate(519%) hue-rotate(350deg) brightness(94%) contrast(96%);
 }
 
